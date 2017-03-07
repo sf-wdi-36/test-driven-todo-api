@@ -43,6 +43,14 @@ app.get('/api/todos', function index(req, res) {
   res.json({ data: todos });
 });
 
+app.get('/api/todos/search', function search(req, res) {
+  var query = req.query.q;
+  var foundTodos = todos.filter(function (todo) {
+    return todo.task.includes(query);
+  });
+  res.json({data: foundTodos});
+});
+
 // create new todo
 app.post('/api/todos', function create(req, res) {
   // create new todo with form data (`req.body`)
@@ -83,7 +91,7 @@ app.put('/api/todos/:id', function update(req, res) {
 
   // find todo to update by its id
   var todoToUpdate = todos.filter(function (todo) {
-    return todo._id == todoId;
+    return todo._id === todoId;
   })[0];
 
   // update the todo's task
@@ -102,7 +110,7 @@ app.delete('/api/todos/:id', function destroy(req, res) {
 
   // find todo to delete by its id
   var todoToDelete = todos.filter(function (todo) {
-    return todo._id == todoId;
+    return todo._id === todoId;
   })[0];
 
   // remove todo from `todos` array
